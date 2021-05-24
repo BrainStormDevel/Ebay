@@ -1,0 +1,27 @@
+{
+	"name": "brainstormdevel/ebay",
+    "type": "library",
+    "description": "A simple Ebay Class that uses OAuth 2.0 and PSR-16 cache",
+    "keywords": [
+        "ebay",
+        "PSR-16",
+        "OAuth"
+    ],
+    "homepage": "https://github.com/BrainStormDevel/ebay",
+    "license": "MIT",
+    "require": {
+		"php": "^7.2 || ^8.0",
+        "guzzlehttp/guzzle": "^7.3",
+        "phpfastcache/phpfastcache": "^8.0"
+    },
+	"autoload": {
+        "psr-4": {
+            "BrainStorm\\Ebay\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BrainStorm\\Ebay\\Test\\": "tests/"
+        }
+    }
+}
