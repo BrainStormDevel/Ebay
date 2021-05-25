@@ -10,7 +10,7 @@
     "homepage": "https://github.com/BrainStormDevel/ebay",
     "license": "MIT",
     "require": {
-		"php": "^7.0 || ^8.0",
+		"php": "^7.2 || ^8.0",
         "guzzlehttp/guzzle": "^7.3",
         "phpfastcache/phpfastcache": "^8.0"
     },
