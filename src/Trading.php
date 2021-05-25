@@ -34,6 +34,6 @@ class Trading
 			],
 			'body' => $xml
 		]);
-		return simplexml_load_string($response->getBody()->getContents());
+		return json_encode(simplexml_load_string($response->getBody()->getContents()));
 	}
 }
