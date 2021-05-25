@@ -20,17 +20,22 @@ class EbayRequest
 	protected $cache_type;
 	protected $oauth;
 	protected $codeAuth;
+	public $url;
+	public $version;
+	public $siteid;
 	
 	public function __construct(array $args, Psr16Adapter $cache)
   {
-		$url = (($args['env'] == 'sandbox') ? $this->sandbox : $this->production);
+		$this->url = (($args['env'] == 'sandbox') ? $this->sandbox : $this->production);
 		$this->appId = (!empty($args['appId']) ? $args['appId'] : '');
 		$this->devId = (!empty($args['devId']) ? $args['devId'] : '');
 		$this->certId = (!empty($args['certId']) ? $args['certId'] : '');
 		$this->RuName = (!empty($args['RuName']) ? $args['RuName'] : '');
 		$this->scope = (!empty($args['scope']) ? $args['scope'] : '');
+		$this->version = (!empty($args['version']) ? $args['version'] : '');
+		$this->siteid = (!empty($args['siteid']) ? $args['siteid'] : '');
 		$this->codeAuth = base64_encode(sprintf('%s:%s', $this->appId, $this->certId));
-		$this->client = new Client(['base_uri' => $url]);
+		$this->client = new Client(['base_uri' => $this->url]);
 		$this->cache = $cache;
 	}
 	protected function getAppToken()
