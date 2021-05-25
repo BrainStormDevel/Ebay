@@ -3,7 +3,6 @@
 namespace BrainStorm\Ebay;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\RequestOptions;
 use Phpfastcache\Helper\Psr16Adapter;
 
 class EbayRequest
@@ -16,10 +15,8 @@ class EbayRequest
 	protected $production = 'https://api.ebay.com';
 	protected $client;
 	protected $scope;
-	protected $cache;
-	protected $cache_type;
-	protected $oauth;
 	protected $codeAuth;
+	public $cache;
 	public $url;
 	public $version;
 	public $siteid;

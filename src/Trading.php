@@ -3,7 +3,6 @@
 namespace BrainStorm\Ebay;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\RequestOptions;
 use BrainStorm\Ebay\EbayRequest;
 
 class Trading
