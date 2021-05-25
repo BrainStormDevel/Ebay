@@ -16,7 +16,7 @@ class Trading
 		$this->ebayClient = $ebayClient;
 		$this->client = new Client(['base_uri' => $ebayClient->url]);
 	}
-	protected function GetCategories($refresh_token)
+	public function GetCategories($refresh_token)
   {
 	  $xml = '<?xml version="1.0" encoding="utf-8"?><GetCategoriesRequest xmlns="urn:ebay:apis:eBLBaseComponents">    
 		<ErrorLanguage>en_US</ErrorLanguage>
