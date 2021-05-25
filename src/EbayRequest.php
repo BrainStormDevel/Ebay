@@ -1,6 +1,6 @@
 <?php
 
-namespace BrainStormDevel\Ebay;
+namespace BrainStorm\Ebay;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
