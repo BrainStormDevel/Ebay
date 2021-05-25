@@ -41,7 +41,7 @@ class Trading
 		unset($category);
 		return json_encode($nested);
 	}	
-    public function GetCategories($refresh_token)
+    public function GetCategories($refresh_token, bool $cached = false, int $expire = 86400)
     {
         $xml = '<?xml version="1.0" encoding="utf-8"?><GetCategoriesRequest xmlns="urn:ebay:apis:eBLBaseComponents">    
 		<ErrorLanguage>en_US</ErrorLanguage>
@@ -62,19 +62,31 @@ class Trading
 		$result = simplexml_load_string($response->getBody()->getContents());
 		if ($result->Ack == 'Success') {
 			$allcategory = array();
-				foreach ($result->CategoryArray->Category as $category){
-					$CategoryID = (string) $category->CategoryID;
-					$CategoryParentID = (string) $category->CategoryParentID;
-					$allcategory[] = [
-						'BestOfferEnabled' => (bool) $category->BestOfferEnabled,
-						'AutoPayEnabled' => (bool) $category->AutoPayEnabled,
-						'CategoryLevel' => (string) $category->CategoryLevel,
-						'CategoryName' => (string) $category->CategoryName,
-						'CategoryID' => $CategoryID,
-						'CategoryParentID' => $CategoryParentID
-					];						
+			foreach ($result->CategoryArray->Category as $category){
+				$CategoryID = (string) $category->CategoryID;
+				$CategoryParentID = (string) $category->CategoryParentID;
+				$allcategory[] = [
+					'BestOfferEnabled' => (bool) $category->BestOfferEnabled,
+					'AutoPayEnabled' => (bool) $category->AutoPayEnabled,
+					'CategoryLevel' => (string) $category->CategoryLevel,
+					'CategoryName' => (string) $category->CategoryName,
+					'CategoryID' => $CategoryID,
+					'CategoryParentID' => $CategoryParentID
+				];						
+			}
+			if ($cached) {
+				if (!$this->ebayClient->cache->has('get_categories')) {
+					$thisresponse = $this->makeNestedData($allcategory);
+					$this->ebayClient->cache->set('get_categories', $thisresponse, $expire);
+					return $thisresponse;
 				}
-			return $this->makeNestedData($allcategory);
+				else {
+					return $this->ebayClient->cache->get('get_categories');
+				}
+			}
+			else {
+				return $this->makeNestedData($allcategory);
+			}
 		}
     }
 }
