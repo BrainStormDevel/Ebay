@@ -34,6 +34,6 @@ class Trading
 			],
 			'body' => $xml
 		]);
-		return simplexml_load_string($myresponse->getBody()->getContents());
+		return simplexml_load_string($response->getBody()->getContents());
 	}
 }
