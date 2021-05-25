@@ -1,5 +1,5 @@
 {
-	"name": "brainstormdevel/ebay",
+	"name": "brainstorm/ebay",
     "type": "library",
     "description": "A simple Ebay Class that uses OAuth 2.0 and PSR-16 cache",
     "keywords": [
