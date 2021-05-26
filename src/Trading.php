@@ -61,6 +61,10 @@ class Trading
         ]);
 		$result = simplexml_load_string($response->getBody()->getContents());
 		if ($result->Ack == 'Success') {
+			$cachename = 'GetCategories'. $this->ebayClient->siteid;
+			if (($cached) && ($this->ebayClient->cache->has($cachename))) {
+				return $this->ebayClient->cache->get($cachename);
+			}
 			$allcategory = array();
 			foreach ($result->CategoryArray->Category as $category){
 				$CategoryID = (string) $category->CategoryID;
@@ -74,19 +78,60 @@ class Trading
 					'CategoryParentID' => $CategoryParentID
 				];						
 			}
-			if ($cached) {
-				if (!$this->ebayClient->cache->has('get_categories')) {
-					$thisresponse = $this->makeNestedData($allcategory);
-					$this->ebayClient->cache->set('get_categories', $thisresponse, $expire);
-					return $thisresponse;
-				}
-				else {
-					return $this->ebayClient->cache->get('get_categories');
-				}
+			$thisresponse = $this->makeNestedData($allcategory);
+			if (($cached) && (!$this->ebayClient->cache->has($cachename))) {
+				$this->ebayClient->cache->set($cachename, $thisresponse, $expire);
 			}
-			else {
-				return $this->makeNestedData($allcategory);
-			}
+			return $thisresponse;
 		}
     }
+    public function GetCategorySpecifics($refresh_token, string $id, bool $cached = false, int $expire = 86400)
+    {
+        $xml = '<?xml version="1.0" encoding="utf-8"?>
+		<GetCategorySpecificsRequest xmlns="urn:ebay:apis:eBLBaseComponents">
+		<WarningLevel>High</WarningLevel>
+		<CategorySpecific>
+			<!--Enter the CategoryID for which you want the Specifics-->
+		<CategoryID>'. $id .'</CategoryID>
+		</CategorySpecific>
+		</GetCategorySpecificsRequest>';
+        $response = $this->client->request('POST', '/ws/api.dll', [
+            'headers' => [
+            'X-EBAY-API-SITEID' => $this->ebayClient->siteid,
+            'X-EBAY-API-COMPATIBILITY-LEVEL' => $this->ebayClient->version,
+            'X-EBAY-API-CALL-NAME' => 'GetCategorySpecifics',
+            'X-EBAY-API-IAF-TOKEN' => $this->ebayClient->getUserToken($refresh_token),
+            'Content-Type' => 'text/xml; charset=UTF8'
+            ],
+            'body' => $xml
+        ]);
+		$cachename = 'GetCategorySpecifics'. $id . $this->ebayClient->siteid;
+		if (($cached) && $this->ebayClient->cache->has($cachename)) {
+			return $this->ebayClient->cache->get($cachename);
+		}
+		$result = array();
+		$i = 0;
+		$to_obj = simplexml_load_string($response->getBody()->getContents());
+		foreach($to_obj->Recommendations->NameRecommendation as $category){
+			$name = (string) $category->Name;
+			if ($name != 'NULL') {
+				$result[$i]['Name'] = $name;
+				foreach($category->ValueRecommendation as $values){
+						$result[$i]['ValueRecommendation'][] = (string) $values->Value;
+				}
+				$result[$i]['ValidationRules'] = [
+					'ValueType' => (string) $category->ValidationRules->ValueType,
+					'MaxValues' => (string) $category->ValidationRules->MaxValues,
+					'SelectionMode' => (string) $category->ValidationRules->SelectionMode,
+					'UsageConstraint' => (string) $category->ValidationRules->UsageConstraint
+				];
+				$i++;
+			}
+		}
+		$result = json_encode($result);
+		if (($cached) && (!$this->ebayClient->cache->has($cachename))) {
+			$this->ebayClient->cache->set($cachename, $result, $expire);
+		}
+		return $result;
+    }	
 }
