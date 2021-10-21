@@ -11,6 +11,7 @@
     "license": "MIT",
     "require": {
 		"php": "^7.2 || ^8.0",
+		"composer/ca-bundle": "^1.2",
         "guzzlehttp/guzzle": "^7.3",
         "phpfastcache/phpfastcache": "^8.0"
     },
