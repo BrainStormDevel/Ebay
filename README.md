@@ -49,7 +49,7 @@ With the refresh token, you can call the Ebay API that you need:
 
 use Phpfastcache\Helper\Psr16Adapter;
 use BrainStorm\Ebay\EbayRequest;
-use BrainStorm\Ebay\Trading;
+use BrainStorm\Ebay\Trading\GetCategories;
 
 $args = [
 	'env' => 'production',	//use sandbox for test
@@ -63,6 +63,6 @@ $args = [
 ];
 $Psr16Adapter = new Psr16Adapter('Redis');
 $client = new EbayRequest($args, $Psr16Adapter);
-$trading = new Trading($client);
+$trading = new GetCategories($client);
 echo $trading->GetCategories($refresh_token);
 ```
