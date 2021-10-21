@@ -9,7 +9,7 @@ use BrainStorm\Ebay\EbayRequest;
 class WSAPI
 {
 	protected $client;
-    public $ebayClient;
+    protected $ebayClient;
     
     public function __construct(EbayRequest $ebayClient)
     {

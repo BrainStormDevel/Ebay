@@ -11,6 +11,7 @@ class GetCategorySpecifics
 
     public function __construct(EbayRequest $ebayClient)
     {
+		$this->ebayClient = $ebayClient;
         $this->request = new WSAPI($ebayClient);
     }
 
@@ -35,9 +36,9 @@ class GetCategorySpecifics
             'body' => $xml
         ]);*/
 		$response = $this->request->POST($refresh_token, 'GetCategorySpecifics', $xml);
-		$cachename = 'GetCategorySpecifics'. $id . $this->request->ebayClient->siteid;
-		if (($cached) && $this->request->ebayClient->cache->has($cachename)) {
-			return $this->request->ebayClient->cache->get($cachename);
+		$cachename = 'GetCategorySpecifics'. $id . $this->ebayClient->siteid;
+		if (($cached) && $this->ebayClient->cache->has($cachename)) {
+			return $this->ebayClient->cache->get($cachename);
 		}
 		$result = array();
 		$i = 0;

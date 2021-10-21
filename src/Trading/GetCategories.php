@@ -11,6 +11,7 @@ class GetCategories
 
     public function __construct(EbayRequest $ebayClient)
     {
+		$this->ebayClient = $ebayClient;
         $this->request = new WSAPI($ebayClient);
     }
 
@@ -61,9 +62,9 @@ class GetCategories
 		$response = $this->request->POST($refresh_token, 'GetCategories', $xml);
 		$result = simplexml_load_string($response->getBody()->getContents());
 		if ($result->Ack == 'Success') {
-			$cachename = 'GetCategories'. $this->request->ebayClient->siteid;
-			if (($cached) && ($this->request->ebayClient->cache->has($cachename))) {
-				return $this->request->ebayClient->cache->get($cachename);
+			$cachename = 'GetCategories'. $this->ebayClient->siteid;
+			if (($cached) && ($this->ebayClient->cache->has($cachename))) {
+				return $this->ebayClient->cache->get($cachename);
 			}
 			$allcategory = array();
 			foreach ($result->CategoryArray->Category as $category){
