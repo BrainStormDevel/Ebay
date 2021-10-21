@@ -8,6 +8,7 @@ use BrainStorm\Ebay\Request\WSAPI;
 class GetCategorySpecifics
 {
 	protected $request;
+	protected $ebayClient;
 
     public function __construct(EbayRequest $ebayClient)
     {
@@ -25,16 +26,6 @@ class GetCategorySpecifics
 		<CategoryID>'. $id .'</CategoryID>
 		</CategorySpecific>
 		</GetCategorySpecificsRequest>';
-        /*$response = $this->client->request('POST', '/ws/api.dll', [
-            'headers' => [
-            'X-EBAY-API-SITEID' => $this->ebayClient->siteid,
-            'X-EBAY-API-COMPATIBILITY-LEVEL' => $this->ebayClient->version,
-            'X-EBAY-API-CALL-NAME' => 'GetCategorySpecifics',
-            'X-EBAY-API-IAF-TOKEN' => $this->ebayClient->getUserToken($refresh_token),
-            'Content-Type' => 'text/xml; charset=UTF8'
-            ],
-            'body' => $xml
-        ]);*/
 		$response = $this->request->POST($refresh_token, 'GetCategorySpecifics', $xml);
 		$cachename = 'GetCategorySpecifics'. $id . $this->ebayClient->siteid;
 		if (($cached) && $this->ebayClient->cache->has($cachename)) {

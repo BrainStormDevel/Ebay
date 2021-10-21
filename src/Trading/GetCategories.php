@@ -8,6 +8,7 @@ use BrainStorm\Ebay\Request\WSAPI;
 class GetCategories
 {
 	protected $request;
+	protected $ebayClient;
 
     public function __construct(EbayRequest $ebayClient)
     {
@@ -49,16 +50,6 @@ class GetCategories
 		<DetailLevel>ReturnAll</DetailLevel>
 		<ViewAllNodes>true</ViewAllNodes>
 		</GetCategoriesRequest>';
-        /*$response = $this->client->request('POST', '/ws/api.dll', [
-            'headers' => [
-            'X-EBAY-API-SITEID' => $this->ebayClient->siteid,
-            'X-EBAY-API-COMPATIBILITY-LEVEL' => $this->ebayClient->version,
-            'X-EBAY-API-CALL-NAME' => 'GetCategories',
-            'X-EBAY-API-IAF-TOKEN' => $this->ebayClient->getUserToken($refresh_token),
-            'Content-Type' => 'text/xml; charset=UTF8'
-            ],
-            'body' => $xml
-        ]);*/
 		$response = $this->request->POST($refresh_token, 'GetCategories', $xml);
 		$result = simplexml_load_string($response->getBody()->getContents());
 		if ($result->Ack == 'Success') {
