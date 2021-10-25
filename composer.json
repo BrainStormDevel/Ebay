@@ -1,5 +1,5 @@
 {
-	"name": "brainstorm/ebay",
+    "name": "brainstorm/ebay",
     "type": "library",
     "description": "A simple Ebay Class that uses OAuth 2.0 and PSR-16 cache",
     "keywords": [
@@ -10,8 +10,8 @@
     "homepage": "https://github.com/BrainStormDevel/ebay",
     "license": "MIT",
     "require": {
-		"php": "^7.2 || ^8.0",
-		"composer/ca-bundle": "^1.2",
+	"php": "^7.2 || ^8.0",
+	"composer/ca-bundle": "^1.2",
         "guzzlehttp/guzzle": "^7.3",
         "phpfastcache/phpfastcache": "^8.0",
 	"mtdowling/jmespath.php": "^2.6"
