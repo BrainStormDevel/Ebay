@@ -34,7 +34,8 @@ class CategoryType extends \BrainStorm\Ebay\Types\BaseType
      */
     private static $propertyTypes = [
 		'PrimaryCategory' => [
-			'attribute' => false
+			'attribute' => false,
+			'elementName' => 'PrimaryCategory'
 		],
         'BestOfferEnabled' => [
             'type' => 'boolean',
