@@ -482,7 +482,7 @@ class BaseType implements JmesPathableObjectInterface
         $valid = explode('|', $info['type']);
 
         foreach ($valid as $check) {
-            if ($check !== 'any' && \BrainStorm\Ebay\checkPropertyType($check)) {
+            if ($check !== 'any' && \BrainStorm\Ebay\common::checkPropertyType($check)) {
                 if ($check === $actualType || 'array' === $actualType) {
                     return;
                 }
