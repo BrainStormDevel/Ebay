@@ -33,6 +33,7 @@ class CategoryType extends \BrainStorm\Ebay\Types\BaseType
      * @var array Properties belonging to objects of this class.
      */
     private static $propertyTypes = [
+		'PrimaryCategory' => [],
         'BestOfferEnabled' => [
             'type' => 'boolean',
             'repeatable' => false,
