@@ -116,9 +116,7 @@ class BaseType implements JmesPathableObjectInterface
      */
     public function toRequestXml()
     {
-		var_dump(self::$requestXmlRootElementNames);
-		var_dump(get_class($this));
-        return $this->toXml(self::$requestXmlRootElementNames[get_class($this)], true);
+        return $this->toXml(get_class($this), true);
     }
 
     /**
