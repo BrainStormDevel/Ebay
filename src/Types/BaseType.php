@@ -356,7 +356,7 @@ class BaseType implements JmesPathableObjectInterface
         $info = self::propertyInfo($class, $name);
 
         if ($info['repeatable'] && !array_key_exists($name, $this->values)) {
-            $this->values[$name] = new Types\RepeatableType($class, $name, $info['type']);
+            $this->values[$name] = new RepeatableType($class, $name, $info['type']);
         }
 
         return array_key_exists($name, $this->values) ? $this->values[$name] : null;
@@ -382,7 +382,7 @@ class BaseType implements JmesPathableObjectInterface
             if ('array' !== $actualType) {
                 throw new Exceptions\InvalidPropertyTypeException($name, 'BrainStorm\Ebay\Types\RepeatableType', $actualType);
             } else {
-                $this->values[$name] = new Types\RepeatableType(get_class($this), $name, $info['type']);
+                $this->values[$name] = new RepeatableType(get_class($this), $name, $info['type']);
                 foreach ($value as $item) {
                     $this->values[$name][] = $item;
                 }
