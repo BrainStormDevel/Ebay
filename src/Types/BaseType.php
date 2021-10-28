@@ -132,7 +132,7 @@ class BaseType implements JmesPathableObjectInterface
         return sprintf(
             '%s<%s%s%s>%s</%s>',
             $rootElement ? "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" : '',
-            $elementName,
+            array_key_exists(get_class($this), self::$requestXmlRootElementNames) ? sprintf(' %s', self::$requestXmlRootElementNames[get_class($this)]) : $elementName,
             $this->attributesToXml(),
             array_key_exists(get_class($this), self::$xmlNamespaces) ? sprintf(' %s', self::$xmlNamespaces[get_class($this)]) : '',
             $this->propertiesToXml(),
