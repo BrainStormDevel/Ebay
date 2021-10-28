@@ -5,7 +5,7 @@ namespace BrainStorm\Ebay\Trading;
 use BrainStorm\Ebay\EbayRequest;
 use BrainStorm\Ebay\Request\WSAPI;
 
-class AddFixedPriceItemRequest
+class AddFixedPriceItem
 {
 	protected $request;
 	protected $ebayClient;
