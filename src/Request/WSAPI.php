@@ -10,17 +10,21 @@ class WSAPI
 {
 	protected $client;
     protected $ebayClient;
+	protected $version;
+	protected $siteid;
     
-    public function __construct(EbayRequest $ebayClient)
+    public function __construct(EbayRequest $ebayClient, $version = null, $siteid = null)
     {
         $this->ebayClient = $ebayClient;
+		$this->version = ($version ? $version : $ebayClient->version);
+		$this->siteid = ($siteid ? $siteid : $ebayClient->siteid);
         $this->client = new Client(['base_uri' => $ebayClient->url]);
     }
 	public function POST($refresh_token, string $request, string $body) {
 		return $this->client->request('POST', '/ws/api.dll', [
 				'headers' => [
-				'X-EBAY-API-SITEID' => $this->ebayClient->siteid,
-				'X-EBAY-API-COMPATIBILITY-LEVEL' => $this->ebayClient->version,
+				'X-EBAY-API-SITEID' => $this->siteid,
+				'X-EBAY-API-COMPATIBILITY-LEVEL' => $this->version,
 				'X-EBAY-API-CALL-NAME' => $request,
 				'X-EBAY-API-IAF-TOKEN' => $this->ebayClient->getUserToken($refresh_token),
 				'Content-Type' => 'text/xml; charset=UTF8'
