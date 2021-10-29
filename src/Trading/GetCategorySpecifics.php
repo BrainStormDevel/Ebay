@@ -18,15 +18,14 @@ class GetCategorySpecifics
 
     public function GetCategorySpecifics($refresh_token, string $id, bool $cached = false, int $expire = 86400)
     {
-        $xml = '<?xml version="1.0" encoding="utf-8"?>
-		<GetCategorySpecificsRequest xmlns="urn:ebay:apis:eBLBaseComponents">
-		<WarningLevel>High</WarningLevel>
-		<CategorySpecific>
-			<!--Enter the CategoryID for which you want the Specifics-->
-		<CategoryID>'. $id .'</CategoryID>
-		</CategorySpecific>
-		</GetCategorySpecificsRequest>';
-		$response = $this->request->POST($refresh_token, 'GetCategorySpecifics', $xml);
+		$xml = new Types\GetCategorySpecificsRequestType();
+		$xml->ErrorLanguage = 'en_US';
+		$xml->WarningLevel = 'High';
+		$xml->ViewAllNodes = true;
+		$category = new Types\CategoryItemSpecificsType();
+		$category->CategoryID = $id;
+		$xml->CategorySpecific = $category;
+		$response = $this->request->POST($refresh_token, 'GetCategorySpecifics', $xml->torequestxml());
 		$cachename = 'GetCategorySpecifics'. $id . $this->ebayClient->siteid;
 		if (($cached) && $this->ebayClient->cache->has($cachename)) {
 			return $this->ebayClient->cache->get($cachename);
