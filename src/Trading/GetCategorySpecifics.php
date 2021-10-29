@@ -22,9 +22,7 @@ class GetCategorySpecifics
 		$xml = new Types\GetCategorySpecificsRequestType();
 		$xml->ErrorLanguage = 'en_US';
 		$xml->WarningLevel = 'High';
-		$category = new Types\CategoryItemSpecificsType();
-		$category->CategoryID = $id;
-		$xml->CategorySpecific = $category;
+		$xml->CategoryID[] = $id;		
 		$response = $this->request->POST($refresh_token, 'GetCategorySpecifics', $xml->torequestxml());
 		$cachename = 'GetCategorySpecifics'. $id . $this->ebayClient->siteid;
 		if (($cached) && $this->ebayClient->cache->has($cachename)) {
