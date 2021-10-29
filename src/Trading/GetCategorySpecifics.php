@@ -4,6 +4,7 @@ namespace BrainStorm\Ebay\Trading;
 
 use BrainStorm\Ebay\EbayRequest;
 use BrainStorm\Ebay\Request\WSAPI;
+use BrainStorm\Ebay\Trading\Types;
 
 class GetCategorySpecifics
 {
@@ -16,7 +17,7 @@ class GetCategorySpecifics
         $this->request = new WSAPI($ebayClient);
     }
 
-    public function GetCategorySpecifics($refresh_token, string $id, bool $cached = false, int $expire = 86400)
+    public function doRequest($refresh_token, string $id, bool $cached = false, int $expire = 86400)
     {
 		$xml = new Types\GetCategorySpecificsRequestType();
 		$xml->ErrorLanguage = 'en_US';

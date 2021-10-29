@@ -43,7 +43,7 @@ class GetCategories
         unset($category);
         return json_encode($nested);
     }
-    public function GetCategories($refresh_token, bool $cached = false, int $expire = 86400)
+    public function doRequest($refresh_token, bool $cached = false, int $expire = 86400)
     {
 		$xml = new Types\GetCategoriesRequestType();
 		$xml->ErrorLanguage = 'en_US';
