@@ -48,7 +48,7 @@ class GetCategories
 		$xml = new Types\GetCategoriesRequestType();
 		$xml->ErrorLanguage = 'en_US';
 		$xml->WarningLevel = 'High';
-		$xml->DetailLevel = 'ReturnAll';
+		$xml->DetailLevel[] = 'ReturnAll';
 		$xml->ViewAllNodes = true;
 		$response = $this->request->POST($refresh_token, 'GetCategories', $xml->torequestxml());
 		$result = simplexml_load_string($response->getBody()->getContents());
