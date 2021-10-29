@@ -22,7 +22,6 @@ class GetCategorySpecifics
 		$xml = new Types\GetCategorySpecificsRequestType();
 		$xml->ErrorLanguage = 'en_US';
 		$xml->WarningLevel = 'High';
-		$xml->ViewAllNodes = true;
 		$category = new Types\CategoryItemSpecificsType();
 		$category->CategoryID = $id;
 		$xml->CategorySpecific = $category;
