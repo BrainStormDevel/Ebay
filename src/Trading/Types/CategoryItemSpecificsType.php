@@ -15,7 +15,7 @@ namespace BrainStorm\Ebay\Trading\Types;
  * @property string[] $CategoryID
  * @property \DTS\eBaySDK\Trading\Types\NameValueListArrayType $ItemSpecifics
  */
-class CategoryItemSpecificsType extends BaseType
+class CategoryItemSpecificsType extends \BrainStorm\Ebay\Types\BaseType
 {
     /**
      * @var array Properties belonging to objects of this class.
