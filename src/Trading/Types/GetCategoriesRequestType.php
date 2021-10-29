@@ -17,7 +17,7 @@ namespace BrainStorm\Ebay\Trading\Types;
  * @property integer $LevelLimit
  * @property boolean $ViewAllNodes
  */
-class GetCategoriesRequestType extends \BrainStorm\Ebay\Trading\Types\AbstractRequestType
+class GetCategoriesRequestType extends AbstractRequestType
 {
     /**
      * @var array Properties belonging to objects of this class.
