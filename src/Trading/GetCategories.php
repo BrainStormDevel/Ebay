@@ -4,6 +4,7 @@ namespace BrainStorm\Ebay\Trading;
 
 use BrainStorm\Ebay\EbayRequest;
 use BrainStorm\Ebay\Request\WSAPI;
+use BrainStorm\Ebay\Trading\Types;
 
 class GetCategories
 {
@@ -44,13 +45,11 @@ class GetCategories
     }
     public function GetCategories($refresh_token, bool $cached = false, int $expire = 86400)
     {
-        $xml = '<?xml version="1.0" encoding="utf-8"?><GetCategoriesRequest xmlns="urn:ebay:apis:eBLBaseComponents">    
-		<ErrorLanguage>en_US</ErrorLanguage>
-		<WarningLevel>High</WarningLevel>
-		<DetailLevel>ReturnAll</DetailLevel>
-		<ViewAllNodes>true</ViewAllNodes>
-		</GetCategoriesRequest>';
-		$response = $this->request->POST($refresh_token, 'GetCategories', $xml);
+		$xml = new Types\GetCategoriesRequestType();
+		$xml->ErrorLanguage = 'en_US';
+		$xml->WarningLevel = 'High';
+		$xml->ViewAllNodes = true;
+		$response = $this->request->POST($refresh_token, 'GetCategories', $xml->torequestxml());
 		$result = simplexml_load_string($response->getBody()->getContents());
 		if ($result->Ack == 'Success') {
 			$cachename = 'GetCategories'. $this->ebayClient->siteid;
