@@ -59,7 +59,7 @@ class GetCategorySpecificsRequestType extends \BrainStorm\Ebay\Trading\Types\Abs
             'elementName' => 'Name'
         ],
         'CategorySpecific' => [
-            'type' => 'DTS\eBaySDK\Trading\Types\CategoryItemSpecificsType',
+            'type' => 'BrainStorm\Ebay\Trading\Types\CategoryItemSpecificsType',
             'repeatable' => true,
             'attribute' => false,
             'elementName' => 'CategorySpecific'

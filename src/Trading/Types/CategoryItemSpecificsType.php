@@ -28,7 +28,7 @@ class CategoryItemSpecificsType extends \BrainStorm\Ebay\Types\BaseType
             'elementName' => 'CategoryID'
         ],
         'ItemSpecifics' => [
-            'type' => 'DTS\eBaySDK\Trading\Types\NameValueListArrayType',
+            'type' => 'BrainStorm\Ebay\Trading\Types\NameValueListArrayType',
             'repeatable' => false,
             'attribute' => false,
             'elementName' => 'ItemSpecifics'
