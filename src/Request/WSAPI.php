@@ -18,7 +18,7 @@ class WSAPI
         $this->ebayClient = $ebayClient;
 		$this->version = ($version ? $version : $ebayClient->version);
 		$this->siteid = ($siteid ? $siteid : $ebayClient->siteid);
-        $this->client = new Client(['base_uri' => $ebayClient->url]);
+        $this->client = $ebayClient->client;
     }
 	public function POST($refresh_token, string $request, string $body) {
 		return $this->client->request('POST', '/ws/api.dll', [

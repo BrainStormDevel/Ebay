@@ -3,6 +3,8 @@
 namespace BrainStorm\Ebay;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
+use Composer\CaBundle\CaBundle;
 use Phpfastcache\Helper\Psr16Adapter;
 
 class EbayRequest
@@ -13,7 +15,7 @@ class EbayRequest
     protected $RuName;
     protected $sandbox = 'https://api.sandbox.ebay.com';
     protected $production = 'https://api.ebay.com';
-    protected $client;
+    public $client;
     protected $scope;
     protected $codeAuth;
     public $cache;
@@ -32,7 +34,7 @@ class EbayRequest
         $this->version = (!empty($args['version']) ? $args['version'] : '');
         $this->siteid = (!empty($args['siteid']) ? $args['siteid'] : '');
         $this->codeAuth = base64_encode(sprintf('%s:%s', $this->appId, $this->certId));
-        $this->client = new Client(['base_uri' => $this->url]);
+        $this->client = new Client(['base_uri' => $this->url, RequestOptions::VERIFY => CaBundle::getSystemCaRootBundlePath()]);
         $this->cache = $cache;
     }
     protected function getAppToken()
