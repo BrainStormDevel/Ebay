@@ -47,6 +47,16 @@ class GetCategories
 				$cidlv4 = $s['CategoryID'];
 				$pidlv3 = $s['CategoryParentID'];			
 				$nested[$cidlv1]['Children'][$cidlv2]['Children'][$pidlv3]['Children'][$cidlv4] = &$s;
+			}
+			else if ($s['CategoryLevel'] == 5) {
+				$cidlv5 = $s['CategoryID'];
+				$pidlv4 = $s['CategoryParentID'];			
+				$nested[$cidlv1]['Children'][$cidlv2]['Children'][$cidlv3]['Children'][$pidlv4]['Children'][$cidlv5] = &$s;
+			}
+			else if ($s['CategoryLevel'] == 6) {
+				$cidlv6 = $s['CategoryID'];
+				$pidlv5 = $s['CategoryParentID'];			
+				$nested[$cidlv1]['Children'][$cidlv2]['Children'][$cidlv3]['Children'][$cidlv4]['Children'][$pidlv5]['Children'][$cidlv6] = &$s;
 			}			
 		}
 	}
