@@ -64,6 +64,10 @@ class GetCategories
     }
     public function doRequest($refresh_token, bool $cached = false, int $expire = 86400)
     {
+		$cachename = 'GetCategories'. $this->ebayClient->siteid;
+		if (($cached) && ($this->ebayClient->cache->has($cachename))) {
+			return $this->ebayClient->cache->get($cachename);
+		}
 		$xml = new Types\GetCategoriesRequestType();
 		$xml->ErrorLanguage = 'en_US';
 		$xml->WarningLevel = 'High';
@@ -72,10 +76,6 @@ class GetCategories
 		$response = $this->request->POST($refresh_token, 'GetCategories', $xml->torequestxml());
 		$result = simplexml_load_string($response->getBody()->getContents());
 		if ($result->Ack == 'Success') {
-			$cachename = 'GetCategories'. $this->ebayClient->siteid;
-			if (($cached) && ($this->ebayClient->cache->has($cachename))) {
-				return $this->ebayClient->cache->get($cachename);
-			}
 			$allcategory = array();
 			foreach ($result->CategoryArray->Category as $category){
 				$CategoryID = (string) $category->CategoryID;
