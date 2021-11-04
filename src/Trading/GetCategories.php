@@ -24,11 +24,11 @@ class GetCategories
     
         //loop over each category
         foreach ($data as &$s) {
-		if ( empty($s['CategoryParentID']) ) {
+		if (!isset($data[$s['CategoryParentID']]) ) {
 			$nested[] = &$s;
 		}
 		else {
-			$pid = $s['CategoryParentID'];
+			$pid = $data[$s['CategoryParentID']];
 			if ( isset($data[$pid]) ) {
 				if ( !isset($data[$pid]['Children']) ) {
 					$data[$pid]['Children'] = array();
@@ -37,7 +37,7 @@ class GetCategories
 				$data[$pid]['Children'][] = &$s;
 			}
 		}
-	}
+		}
         return json_encode($nested);
     }
     public function doRequest($refresh_token, bool $cached = false, int $expire = 86400)
