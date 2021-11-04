@@ -19,15 +19,16 @@ class GetCategorySpecifics
 
     public function doRequest($refresh_token, string $id, bool $cached = false, int $expire = 86400)
     {
+		$cachename = 'GetCategorySpecifics'. $id . $this->ebayClient->siteid;
+		if (($cached) && $this->ebayClient->cache->has($cachename)) {
+			return $this->ebayClient->cache->get($cachename);
+		}
 		$xml = new Types\GetCategorySpecificsRequestType();
 		$xml->ErrorLanguage = 'en_US';
 		$xml->WarningLevel = 'High';
 		$xml->CategoryID[] = $id;		
 		$response = $this->request->POST($refresh_token, 'GetCategorySpecifics', $xml->torequestxml());
-		$cachename = 'GetCategorySpecifics'. $id . $this->ebayClient->siteid;
-		if (($cached) && $this->ebayClient->cache->has($cachename)) {
-			return $this->ebayClient->cache->get($cachename);
-		}
+
 		$result = array();
 		$i = 0;
 		$to_obj = simplexml_load_string($response->getBody()->getContents());
