@@ -23,8 +23,8 @@ class GetCategories
         $nested = array();
     
         //loop over each category
-        foreach ($data as &$s) {
-		if ($data[$s['CategoryParentID']] == $data[$s['CategoryID']]) ) {
+	foreach ($data as &$s) {
+		if ($data[$s['CategoryParentID']] == $data[$s['CategoryID']]) {
 			$nested[] = &$s;
 		}
 		else {
