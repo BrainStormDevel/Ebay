@@ -32,13 +32,11 @@ class GetCategories
 			if ($s['CategoryLevel'] == 2) {
 				$cidlv2 = $s['CategoryID'];
 				$pidlv1 = $s['CategoryParentID'];
-				if ( isset($data[$cidlv1]) ) {
-					if ( !isset($data[$cidlv1]['Children']) ) {
-						$data[$cidlv1]['Children'] = array();
-					}
-					
-					$data[$cidlv1]['Children'][] = &$s;
+				if ( !isset($data[$cidlv1]['Children']) ) {
+					$data[$cidlv1]['Children'] = array();
 				}
+					
+				$data[$cidlv1]['Children'][] = &$s;
 			}
 		}
 	}
