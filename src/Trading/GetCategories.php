@@ -24,12 +24,12 @@ class GetCategories
     
         //loop over each category
 	foreach ($data as &$s) {
-		if ($data[$s['CategoryLevel']] == 1) {
+		if ($s['CategoryLevel'] == 1) {
 			$cidlv1 = $s['CategoryID'];
 			$nested[] = &$s;
 		}
 		else {
-			if ($data[$s['CategoryLevel']] == 2) {
+			if ($s['CategoryLevel'] == 2) {
 				$cidlv2 = $s['CategoryID'];
 				$pidlv1 = $s['CategoryParentID'];
 				if ( isset($data[$cidlv1]) ) {
