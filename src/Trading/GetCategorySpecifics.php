@@ -45,6 +45,7 @@ class GetCategorySpecifics
 					'SelectionMode' => (string) $category->ValidationRules->SelectionMode,
 					'UsageConstraint' => (string) $category->ValidationRules->UsageConstraint
 				];
+				$result[$i]['HelpText'] = $category->HelpText;
 				$i++;
 			}
 		}
