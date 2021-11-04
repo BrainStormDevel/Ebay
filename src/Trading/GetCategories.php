@@ -42,7 +42,7 @@ class GetCategories
 				$cidlv3 = $s['CategoryID'];
 				$pidlv2 = $s['CategoryParentID'];
 				if ( !isset($nested[$cidlv1]['Children'][$cidlv2]['Children']) ) {
-					$nested[$cidlv1]['Children'] = array();
+					$nested[$cidlv1]['Children'][$cidlv2] = array();
 				}
 					
 				$nested[$cidlv1]['Children'][$cidlv2]['Children'] = &$s;
