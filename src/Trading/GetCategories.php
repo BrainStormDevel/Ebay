@@ -28,7 +28,7 @@ class GetCategories
 			$nested[] = &$s;
 		}
 		else {
-			$pid = $data[$s['CategoryParentID']];
+			$pid = $s['CategoryParentID'];
 			if ( isset($data[$pid]) ) {
 				if ( !isset($data[$pid]['Children']) ) {
 					$data[$pid]['Children'] = array();
