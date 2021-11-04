@@ -33,20 +33,21 @@ class GetCategories
 				$cidlv2 = $s['CategoryID'];
 				$pidlv1 = $s['CategoryParentID'];
 				if ( !isset($nested[$cidlv1]['Children']) ) {
-					$nested[$cidlv1]['Children'] = array();
+					$nested[$pidlv1]['Children'] = array();
 				}
 					
-				$nested[$cidlv1]['Children'][$cidlv2] = &$s;
+				$nested[$pidlv1]['Children'][$cidlv2] = &$s;
 			}
 			else if ($s['CategoryLevel'] == 3) {
 				$cidlv3 = $s['CategoryID'];
-				$pidlv2 = $s['CategoryParentID'];
-				/*if ( !isset($nested[$cidlv1]['Children'][$cidlv2]['Children']) ) {
-					$nested[$cidlv1]['Children'][$cidlv2] = array();
-				}*/
-					
-				$nested[$cidlv1]['Children'][$cidlv2]['Children'] = &$s;
+				$pidlv2 = $s['CategoryParentID'];				
+				$nested[$cidlv1]['Children'][$pidlv2]['Children'][$cidlv3] = &$s;
 			}
+			else if ($s['CategoryLevel'] == 4) {
+				$cidlv4 = $s['CategoryID'];
+				$pidlv3 = $s['CategoryParentID'];			
+				$nested[$cidlv1]['Children'][$cidlv2]['Children'][$pidlv3]['Children'][$cidlv4] = &$s;
+			}			
 		}
 	}
         return json_encode($nested);
