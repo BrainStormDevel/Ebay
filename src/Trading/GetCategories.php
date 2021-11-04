@@ -24,7 +24,7 @@ class GetCategories
     
         //loop over each category
         foreach ($data as &$s) {
-		if ( is_null($s['CategoryParentID']) ) {
+		if ( !isset($s['CategoryParentID']) ) {
 			$nested[] = &$s;
 		}
 		else {
