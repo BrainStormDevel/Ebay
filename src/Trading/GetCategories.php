@@ -23,24 +23,21 @@ class GetCategories
         $nested = array();
     
         //loop over each category
-        foreach ($data as &$category) {
-            //is there is no children array, add it
-            if (!isset($category['Children'])) {
-                $category['Children'] = array();
-            }
-            //check if there is a matching parent
-            if (isset($data[$category['CategoryParentID']])) {
-                //add this under the parent as a child by reference
-                if (!isset($data[$category['CategoryParentID']]['Children'])) {
-                    $data[$category['CategoryParentID']]['Children'] = array();
-                }
-                $data[$category['CategoryParentID']]['Children'][$category['CategoryID']] = &$category;
-            //else, no parent found, add at top level
-            } else {
-                $nested[$category['CategoryID']] = &$category;
-            }
-        }
-        unset($category);
+        foreach ($data as &$s) {
+		if ( is_null($s['CategoryParentID']) ) {
+			$nested[] = &$s;
+		}
+		else {
+			$pid = $s['CategoryParentID'];
+			if ( isset($data[$pid]) ) {
+				if ( !isset($data[$pid]['Children']) ) {
+					$data[$pid]['Children'] = array();
+				}
+
+				$data[$pid]['Children'][] = &$s;
+			}
+		}
+	}
         return json_encode($nested);
     }
     public function doRequest($refresh_token, bool $cached = false, int $expire = 86400)
