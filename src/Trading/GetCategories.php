@@ -36,7 +36,16 @@ class GetCategories
 					$nested[$cidlv1]['Children'] = array();
 				}
 					
-				$nested[$cidlv1]['Children'][] = &$s;
+				$nested[$cidlv1]['Children'][$cidlv2] = &$s;
+			}
+			else if ($s['CategoryLevel'] == 3) {
+				$cidlv3 = $s['CategoryID'];
+				$pidlv2 = $s['CategoryParentID'];
+				if ( !isset($nested[$cidlv1]['Children'][$cidlv2]['Children']) ) {
+					$nested[$cidlv1]['Children'] = array();
+				}
+					
+				$nested[$cidlv1]['Children'][$cidlv2]['Children'] = &$s;
 			}
 		}
 	}
