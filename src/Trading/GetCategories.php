@@ -23,24 +23,43 @@ class GetCategories
         $nested = array();
     
         //loop over each category
-        foreach ($data as &$category) {
-            //is there is no children array, add it
-            if (!isset($category['Children'])) {
-                $category['Children'] = array();
-            }
-            //check if there is a matching parent
-            if (isset($data[$category['CategoryParentID']])) {
-                //add this under the parent as a child by reference
-                if (!isset($data[$category['CategoryParentID']]['Children'])) {
-                    $data[$category['CategoryParentID']]['Children'] = array();
-                }
-                $data[$category['CategoryParentID']]['Children'][$category['CategoryID']] = &$category;
-            //else, no parent found, add at top level
-            } else {
-                $nested[$category['CategoryID']] = &$category;
-            }
-        }
-        unset($category);
+		foreach ($data as &$s) {
+		if ($s['CategoryLevel'] == 1) {
+			$cidlv1 = $s['CategoryID'];
+			$nested[$cidlv1] = &$s;
+		}
+		else {
+			if ($s['CategoryLevel'] == 2) {
+				$cidlv2 = $s['CategoryID'];
+				$pidlv1 = $s['CategoryParentID'];
+				if ( !isset($nested[$cidlv1]['Children']) ) {
+					$nested[$pidlv1]['Children'] = array();
+				}
+					
+				$nested[$pidlv1]['Children'][$cidlv2] = &$s;
+			}
+			else if ($s['CategoryLevel'] == 3) {
+				$cidlv3 = $s['CategoryID'];
+				$pidlv2 = $s['CategoryParentID'];				
+				$nested[$cidlv1]['Children'][$pidlv2]['Children'][$cidlv3] = &$s;
+			}
+			else if ($s['CategoryLevel'] == 4) {
+				$cidlv4 = $s['CategoryID'];
+				$pidlv3 = $s['CategoryParentID'];			
+				$nested[$cidlv1]['Children'][$cidlv2]['Children'][$pidlv3]['Children'][$cidlv4] = &$s;
+			}
+			else if ($s['CategoryLevel'] == 5) {
+				$cidlv5 = $s['CategoryID'];
+				$pidlv4 = $s['CategoryParentID'];			
+				$nested[$cidlv1]['Children'][$cidlv2]['Children'][$cidlv3]['Children'][$pidlv4]['Children'][$cidlv5] = &$s;
+			}
+			else if ($s['CategoryLevel'] == 6) {
+				$cidlv6 = $s['CategoryID'];
+				$pidlv5 = $s['CategoryParentID'];			
+				$nested[$cidlv1]['Children'][$cidlv2]['Children'][$cidlv3]['Children'][$cidlv4]['Children'][$pidlv5]['Children'][$cidlv6] = &$s;
+			}			
+		}
+		}
         return json_encode($nested);
     }
     public function doRequest($refresh_token, bool $cached = false, int $expire = 86400)
