@@ -15,7 +15,7 @@ namespace BrainStorm\Ebay\Trading\Types;
  * @property string $ItemID
  * @property \DTS\eBaySDK\Trading\Enums\EndReasonCodeType $EndingReason
  */
-class EndItemRequestType extends \BrainStorm\Ebay\Types\AbstractRequestType
+class EndItemRequestType extends \BrainStorm\Ebay\Trading\Types\AbstractRequestType
 {
     /**
      * @var array Properties belonging to objects of this class.
