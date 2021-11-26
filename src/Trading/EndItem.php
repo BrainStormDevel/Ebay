@@ -4,8 +4,9 @@ namespace BrainStorm\Ebay\Trading;
 
 use BrainStorm\Ebay\EbayRequest;
 use BrainStorm\Ebay\Request\WSAPI;
+use BrainStorm\Ebay\Trading\Types;
 
-class AddFixedPriceItem
+class EndItem
 {
 	protected $request;
 	protected $ebayClient;
@@ -16,9 +17,14 @@ class AddFixedPriceItem
         $this->request = new WSAPI($ebayClient);
     }
 	
-    public function doRequest($refresh_token, string $body)
+    public function doRequest($refresh_token, string $id, string $comment)
     {
-		$response = $this->request->POST($refresh_token, 'AddFixedPriceItem', $body);
+		$xml = new Types\EndItemRequestType();
+		$xml->ErrorLanguage = 'en_US';
+		$xml->WarningLevel = 'High';
+		$xml->ItemID = $id;
+		$xml->EndingReason = $comment;
+		$response = $this->request->POST($refresh_token, 'EndItem', $xml->torequestxml());
 		$result = array();
 		$i = 0;
 		$to_obj = simplexml_load_string($response->getBody()->getContents());
