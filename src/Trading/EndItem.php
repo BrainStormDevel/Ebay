@@ -17,7 +17,7 @@ class EndItem
         $this->request = new WSAPI($ebayClient);
     }
 	
-    public function doRequest($refresh_token, string $id, string $comment)
+    public function doRequest($refresh_token, string $id, string $comment = 'NotAvailable')
     {
 		$xml = new Types\EndItemRequestType();
 		$xml->ErrorLanguage = 'en_US';
