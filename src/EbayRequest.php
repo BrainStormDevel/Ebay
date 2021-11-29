@@ -9,6 +9,7 @@ use Phpfastcache\Helper\Psr16Adapter;
 
 class EbayRequest
 {
+	protected $env;
     protected $appId;
     protected $devId;
     protected $certId;
@@ -25,6 +26,7 @@ class EbayRequest
     
     public function __construct(array $args, Psr16Adapter $cache)
     {
+		$this->env = (($args['env'] == 'sandbox') ? 'sandbox' : 'production');
         $this->url = (($args['env'] == 'sandbox') ? $this->sandbox : $this->production);
         $this->appId = (!empty($args['appId']) ? $args['appId'] : '');
         $this->devId = (!empty($args['devId']) ? $args['devId'] : '');
@@ -59,7 +61,8 @@ class EbayRequest
     }
     public function getUrlUserConsent()
     {
-        return 'https://auth.sandbox.ebay.com/oauth2/authorize?client_id='. $this->appId .'&redirect_uri='. $this->RuName .'&response_type=code&scope='. $this->scope .'&prompt=login';
+		$url = (($this->env == 'sandbox') ? 'https://auth.sandbox.ebay.com/oauth2/authorize?client_id='. $this->appId .'&redirect_uri='. $this->RuName .'&response_type=code&scope='. $this->scope .'&prompt=login' : 'https://auth.ebay.com/oauth2/authorize?client_id='. $this->appId .'&redirect_uri='. $this->RuName .'&response_type=code&scope='. $this->scope .'&prompt=login');
+        return $url;
     }
     public function getUserToken(string $refresh_token = null)
     {
