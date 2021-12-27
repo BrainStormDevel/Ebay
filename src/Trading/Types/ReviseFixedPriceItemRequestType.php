@@ -23,7 +23,7 @@ class ReviseFixedPriceItemRequestType extends AbstractRequestType
      */
     private static $propertyTypes = [
         'Item' => [
-            'type' => 'Types\ItemType',
+            'type' => 'BrainStorm\Ebay\Trading\Types\ItemType',
             'repeatable' => false,
             'attribute' => false,
             'elementName' => 'Item'
